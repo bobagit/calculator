@@ -98,9 +98,9 @@
 <script>
 
 let add = (a, b) => parseInt(a) + parseInt(b)
-let subtract = (a, b) => a - b
-let divide = (a, b) => a / b
-let multiply = (a, b) => a * b
+let subtract = (a, b) => parseInt(a) - parseInt(b)
+let divide = (a, b) => parseInt(a) / parseInt(b)
+let multiply = (a, b) => parseInt(a) * parseInt(b)
 let operate = (func, a, b) => func(a, b)
 
 let memory = {
@@ -108,6 +108,7 @@ let memory = {
     a: undefined,
     operator: undefined,
     b: undefined,
+    total: undefined,
 }
 
 // Targets
@@ -120,12 +121,12 @@ let updateMemory = (num) => {
       memory.a != undefined && 
       memory.b == undefined &&
       memory.collector != undefined) {
-      memory.collector = memory.collector.concat(num)
+    memory.collector = memory.collector.concat(num)
     return memory.collector 
     
   } else if (memory.operator != undefined && 
-             memory.a != undefined && 
-             memory.b == undefined) {
+      memory.a != undefined && 
+      memory.b == undefined) {
     memory.collector = num
     return memory.collector
     
@@ -197,19 +198,106 @@ let btnNine = document.querySelector('.nine')
   .addEventListener('click', () =>
   screen.innerText = updateMemory("9"))
 
-// OPERATORS - ADD
+// OPERATORS
+let operatorDivide = document.querySelector('.divide')
+  .addEventListener('click', function () {
+       // ALLOW computation with operator (instead of equals)
+    if (memory.collector != undefined && memory.a !== undefined && memory.b == undefined) {
+      memory.a = divide(memory.a, memory.collector)
+      memory.collector = '';
+      screen.innerText = memory.a
+    } else if (memory.a == undefined && memory.b == undefined && memory.total != undefined) {
+      memory.a = memory.total;
+      memory.operator = "divide";
+      memory.collector = '';
+    } else {
+      memory.a = memory.collector;
+      memory.operator = "divide"
+      memory.collector = '';
+  }
+});
+  
+let operatorMultiply = document.querySelector('.multiply')
+  .addEventListener('click', function () {
+        // ALLOW computation with operator (instead of equals)
+    if (memory.collector != undefined && memory.a !== undefined && memory.b == undefined) {
+      memory.a = multiply(memory.a, memory.collector)
+      memory.collector = '';
+      screen.innerText = memory.a
+    } else if (memory.a == undefined && memory.b == undefined && memory.total != undefined) {
+      memory.a = memory.total;
+      memory.operator = "multiply";
+      memory.collector = '';
+    } else {
+    memory.a = memory.collector;
+    memory.operator = "multiply"
+    memory.collector = '';
+    }
+});
+
+let operatorSubtract = document.querySelector('.subtract')
+  .addEventListener('click', function () {
+        // ALLOW computation with operator (instead of equals)
+    if (memory.collector != undefined && memory.a !== undefined && memory.b == undefined) {
+      memory.a = subtract(memory.a, memory.collector)
+      memory.collector = '';
+      screen.innerText = memory.a
+    } else if (memory.a == undefined && memory.b == undefined && memory.total != undefined) {
+      memory.a = memory.total;
+      memory.operator = "subtract";
+      memory.collector = '';
+    } else {
+    memory.a = memory.collector;
+    memory.operator = "subtract"
+    memory.collector = '';
+  }
+});
+
 let operatorAdd = document.querySelector('.add') 
   .addEventListener('click', function() {
+    // ALLOW computation with operator (instead of equals)
+    if (memory.collector != undefined && memory.a !== undefined && memory.b == undefined) {
+      memory.a = add(memory.a, memory.collector)
+      memory.collector = '';
+      screen.innerText = memory.a
+      // After EQUALS, allow further computation
+   } else if (memory.a == undefined && memory.b == undefined && memory.total !=undefined) {
+      memory.a = memory.total;
+      memory.operator = "add";
+      memory.collector = '';
+    } else {
     memory.a = memory.collector;
     memory.operator = "add";
     memory.collector = '';
-  });
+  }
+});
 
 let operatorEquals = document.querySelector('.equals')
   .addEventListener('click', function () {
     memory.b = memory.collector;
     memory.collector = undefined 
-    return screen.innerText = add(memory.a, memory.b)
+    switch (memory.operator) {
+      case 'multiply':
+        memory.total = multiply(memory.a, memory.b)
+        screen.innerText = memory.total;
+        break;
+      case 'add':
+        memory.total = add(memory.a, memory.b);
+        screen.innerText = memory.total;
+        break;
+      case 'subtract':
+        memory.total = subtract(memory.a, memory.b);
+        screen.innerText = memory.total;
+        break;
+      case 'divide':
+        memory.total = divide(memory.a, memory.b);
+        screen.innerText = memory.total;
+        break;
+    }
+    // clean up memory
+    memory.a = undefined;
+    memory.b = undefined;
+    memory.operator = undefined;
   });
 
 
