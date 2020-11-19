@@ -97,14 +97,14 @@
 
 <script>
 
-let add = (a, b) => a + b
+let add = (a, b) => parseInt(a) + parseInt(b)
 let subtract = (a, b) => a - b
 let divide = (a, b) => a / b
 let multiply = (a, b) => a * b
-//let operate = (func, a, b => func(a, b))
+let operate = (func, a, b) => func(a, b)
 
 let memory = {
-    display: undefined,
+    collector: undefined,
     a: undefined,
     operator: undefined,
     b: undefined,
@@ -115,31 +115,35 @@ let screen = document.querySelector('.display p')
 
 let updateMemory = (num) => {
   // #TODO - Fix adding multiple leading Zeros issue
-  // 
-  if (memory.operator != undefined && memory.a != undefined) {
-    memory.b = memory.display
-    memory.display = num 
-    return memory.display 
+  // IF OPERATOR,
+  if (memory.operator != undefined && 
+      memory.a != undefined && 
+      memory.b == undefined &&
+      memory.collector != undefined) {
+      memory.collector = memory.collector.concat(num)
+    return memory.collector 
     
-  } else if (memory.operator != undefined && memory.b != undefined) {
-    memory.display = memory.display.concat(num)
-    return memory.display
+  } else if (memory.operator != undefined && 
+             memory.a != undefined && 
+             memory.b == undefined) {
+    memory.collector = num
+    return memory.collector
     
     // START - NO DATA YET 
-  } else if (memory.display == undefined && memory.operator == undefined) {
-    memory.display = num
-    return memory.display
+  } else if (memory.collector == undefined && memory.operator == undefined) {
+    memory.collector = num
+    return memory.collector
   // PRIOR TO OPERATOR, COUPLE NUMBERS
-  } else if (memory.display != undefined && memory.operator == undefined) {
-    memory.display = memory.display.concat(num)
-    return memory.display
+  } else if (memory.collector != undefined && memory.operator == undefined) {
+    memory.collector = memory.collector.concat(num)
+    return memory.collector
   // First number entered and operator entered   
   } else if (memory.operator != undefined && memory.a != undefined) {
-    memory.b = memory.display
+    memory.b = memory.collector
     return memory.b
   } else if (memory.operator != undefined && memory.a != undefined) {
-    memory.display = memory.display.concat(num)
-    return memory.display
+    memory.collector = memory.collector.concat(num)
+    return memory.collector
   }
 } 
 
@@ -147,7 +151,7 @@ let btnClear = document.querySelector('.clear')
   .addEventListener('click', function() {
   screen.innerText = ""
   // clear memory
-  memory.display = undefined;
+  memory.collector = undefined;
   memory.operator = undefined;
   memory.a = undefined;
   memory.b = undefined;
@@ -193,13 +197,21 @@ let btnNine = document.querySelector('.nine')
   .addEventListener('click', () =>
   screen.innerText = updateMemory("9"))
 
-// OPERATORS
+// OPERATORS - ADD
 let operatorAdd = document.querySelector('.add') 
   .addEventListener('click', function() {
-  memory.a = memory.display; 
-  memory.operator = "add";
-  screen.innerText = updateMemory()
+    memory.a = memory.collector;
+    memory.operator = "add";
+    memory.collector = '';
   });
+
+let operatorEquals = document.querySelector('.equals')
+  .addEventListener('click', function () {
+    memory.b = memory.collector;
+    memory.collector = undefined 
+    return screen.innerText = add(memory.a, memory.b)
+  });
+
 
 //let pressOperator = (value, operator) => 
 //    IF (memory.a && display value) { 
