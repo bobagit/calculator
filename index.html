@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Calculator</title>
+</head>
+<body>
+  
+<div class="container">
+
+  <div class="calc">
+    <div class="display">
+      <p></p>
+    </div>
+    
+    <div class="clear">
+      <p>AC</p>
+    </div>
+    
+    <div class="plusminus">
+      <p>+/-</p>
+    </div>
+    
+    <div class="percentage">
+      <p>%</p>
+    </div>
+    
+    <div class="divide operatorButtons">
+      <p>/</p>
+    </div>
+
+    <div class="seven numPadButtons">
+      <p>7</p>
+    </div>
+
+    <div class="eight numPadButtons">
+      <p>8</p>
+    </div>
+
+    <div class="nine numPadButtons">
+      <p>9</p>
+    </div>
+
+    <div class="multiply operatorButtons">
+      <p>x</p>
+    </div>
+
+    <div class="four numPadButtons">
+      <p>4</p>
+    </div>
+
+    <div class="five numPadButtons">
+      <p>5</p>
+    </div>
+
+    <div class="six numPadButtons">
+      <p>6</p>
+    </div>
+  
+    <div class="subtract operatorButtons">
+      <p>-</p>
+    </div>
+    
+    <div class="one numPadButtons">
+      <p>1</p>
+    </div>
+
+    <div class="two numPadButtons">
+      <p>2</p>
+    </div>
+
+    <div class="three numPadButtons">
+      <p>3</p>
+    </div>
+
+    <div class="add operatorButtons">
+      <p>+</p>
+    </div>
+    
+    <div class="zero numPadButtons">
+      <p>0</p>
+    </div>
+
+    <div class="decimal numPadButtons">
+      <p>.</p>
+    </div>
+
+    <div class="equals operatorButtons">
+      <p>=</p>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+
+let add = (a, b) => a + b
+let subtract = (a, b) => a - b
+let divide = (a, b) => a / b
+let multiply = (a, b) => a * b
+//let operate = (func, a, b => func(a, b))
+
+let memory = {
+    display: undefined,
+    a: undefined,
+    operator: undefined,
+    b: undefined,
+}
+
+// Targets
+let screen = document.querySelector('.display p')
+
+let updateMemory = (num) => {
+  // #TODO - Fix adding multiple leading Zeros issue
+  // 
+  if (memory.operator != undefined && memory.a != undefined) {
+    memory.b = memory.display
+    memory.display = num 
+    return memory.display 
+    
+  } else if (memory.operator != undefined && memory.b != undefined) {
+    memory.display = memory.display.concat(num)
+    return memory.display
+    
+    // START - NO DATA YET 
+  } else if (memory.display == undefined && memory.operator == undefined) {
+    memory.display = num
+    return memory.display
+  // PRIOR TO OPERATOR, COUPLE NUMBERS
+  } else if (memory.display != undefined && memory.operator == undefined) {
+    memory.display = memory.display.concat(num)
+    return memory.display
+  // First number entered and operator entered   
+  } else if (memory.operator != undefined && memory.a != undefined) {
+    memory.b = memory.display
+    return memory.b
+  } else if (memory.operator != undefined && memory.a != undefined) {
+    memory.display = memory.display.concat(num)
+    return memory.display
+  }
+} 
+
+let btnClear = document.querySelector('.clear')
+  .addEventListener('click', function() {
+  screen.innerText = ""
+  // clear memory
+  memory.display = undefined;
+  memory.operator = undefined;
+  memory.a = undefined;
+  memory.b = undefined;
+  });
+
+let btnZero = document.querySelector('.zero')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("0"))
+
+let btnOne = document.querySelector('.one')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("1"))
+
+let btnTwo = document.querySelector('.two')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("2"))
+
+let btnThree = document.querySelector('.three')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("3"))
+
+let btnFour = document.querySelector('.four')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("4"))
+
+let btnFive = document.querySelector('.five')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("5"))
+
+let btnSix = document.querySelector('.six')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("6"))
+
+let btnSeven = document.querySelector('.seven')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("7"))
+
+let btnEight = document.querySelector('.eight')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("8"))
+
+let btnNine = document.querySelector('.nine')
+  .addEventListener('click', () =>
+  screen.innerText = updateMemory("9"))
+
+// OPERATORS
+let operatorAdd = document.querySelector('.add') 
+  .addEventListener('click', function() {
+  memory.a = memory.display; 
+  memory.operator = "add";
+  screen.innerText = updateMemory()
+  });
+
+//let pressOperator = (value, operator) => 
+//    IF (memory.a && display value) { 
+//      assign operator to memory.operator
+//      add display value to member b
+//      process operation
+//      clear memory
+//    } ELSE IF (memory.a && (!display value) {
+//      update memory.operator 
+//    } ELSE { 
+//      assign VALUE -> memory.a
+//      assign OPERATOR -> memory.operator
+
+// function pressEquals(value) {
+//      assign VALUE -> memory.b
+//      run operate function
+//      populate display value
+// }
+//console.log(operate(memory.operator, memory.a, memory.b))
+
+
+</script>
+</body>
+</html>

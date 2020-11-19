@@ -1,0 +1,191 @@
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+  font-family: "Helvetica Neue";
+}
+
+.calc {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  -ms-grid-rows: (1fr)[6];
+      grid-template-rows: repeat(6, 1fr);
+  grid-auto-rows: minmax(20px, auto);
+  gap: 1px;
+  width: 230px;
+  min-width: 210px;
+  margin: 10rem auto;
+  border-radius: 4px;
+  background-color: #525252;
+  -webkit-box-shadow: 0px 15px 30px #ccc;
+          box-shadow: 0px 15px 30px #ccc;
+  color: #ffffff;
+}
+
+.calc .display {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1 / 5;
+  -ms-grid-row: 1;
+  grid-row: 1;
+}
+
+.calc .display p {
+  margin: 0.3rem 1rem 0 0;
+  text-align: right;
+  font-size: 2.2rem;
+  font-weight: 300;
+}
+
+.calc p {
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.calc div:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.calc .display:hover {
+  cursor: default;
+}
+
+.calc div:active {
+  opacity: 0.55;
+}
+
+.calc .clear, .calc .plusminus, .calc .percentage {
+  background-color: #626262;
+}
+
+.calc .divide, .calc .multiply, .calc .subtract, .calc .add, .calc .equals {
+  background-color: #F2A23C;
+  font-weight: 700;
+}
+
+.calc .seven, .calc .eight, .calc .nine, .calc .four, .calc .five, .calc .six, .calc .one, .calc .two, .calc .three, .calc .zero, .calc .decimal {
+  background-color: #7C7C7C;
+}
+
+.calc .plusminus {
+  -ms-grid-column: 2;
+  grid-column: 2 / 2;
+  -ms-grid-row: 2;
+  grid-row: 2 / 2;
+}
+
+.calc .percentage {
+  -ms-grid-column: 3;
+  grid-column: 3 / 3;
+  -ms-grid-row: 2;
+  grid-row: 2 / 2;
+}
+
+.calc .divide {
+  -ms-grid-column: 4;
+  grid-column: 4 / 4;
+  -ms-grid-row: 2;
+  grid-row: 2 / 2;
+}
+
+.calc .seven {
+  -ms-grid-column: 1;
+  grid-column: 1 / 1;
+  -ms-grid-row: 3;
+  grid-row: 3 / 3;
+}
+
+.calc .eight {
+  -ms-grid-column: 2;
+  grid-column: 2 / 2;
+  -ms-grid-row: 3;
+  grid-row: 3 / 3;
+}
+
+.calc .nine {
+  -ms-grid-column: 3;
+  grid-column: 3 / 3;
+  -ms-grid-row: 3;
+  grid-row: 3 / 3;
+}
+
+.calc .multiply {
+  -ms-grid-column: 4;
+  grid-column: 4 / 4;
+  -ms-grid-row: 3;
+  grid-row: 3 / 3;
+}
+
+.calc .four {
+  -ms-grid-column: 1;
+  grid-column: 1 / 1;
+  -ms-grid-row: 4;
+  grid-row: 4 / 4;
+}
+
+.calc .five {
+  -ms-grid-column: 2;
+  grid-column: 2 / 2;
+  -ms-grid-row: 4;
+  grid-row: 4 / 4;
+}
+
+.calc .six {
+  -ms-grid-column: 3;
+  grid-column: 3 / 3;
+  -ms-grid-row: 4;
+  grid-row: 4 / 4;
+}
+
+.calc .subtract {
+  -ms-grid-column: 4;
+  grid-column: 4 / 4;
+  -ms-grid-row: 4;
+  grid-row: 4 / 4;
+}
+
+.calc .one {
+  -ms-grid-column: 1;
+  grid-column: 1 / 1;
+  -ms-grid-row: 5;
+  grid-row: 5 / 5;
+}
+
+.calc .two {
+  -ms-grid-column: 2;
+  grid-column: 2 / 2;
+  -ms-grid-row: 5;
+  grid-row: 5 / 5;
+}
+
+.calc .three {
+  -ms-grid-column: 3;
+  grid-column: 3 / 3;
+  -ms-grid-row: 5;
+  grid-row: 5 / 5;
+}
+
+.calc .add {
+  -ms-grid-column: 4;
+  grid-column: 4 / 4;
+  -ms-grid-row: 5;
+  grid-row: 5 / 5;
+}
+
+.calc .zero {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1 / 3;
+  -ms-grid-row: 6;
+  grid-row: 6 / 6;
+}
+/*# sourceMappingURL=style.css.map */
