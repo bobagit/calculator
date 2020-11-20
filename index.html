@@ -98,8 +98,8 @@
 <script>
 
 let add = (a, b) => parseInt(a) + parseInt(b)
-let subtract = (a, b) => parseInt(a) - parseInt(b)
-let divide = (a, b) => parseInt(a) / parseInt(b)
+let subtract = (a, b) => parseInt(b) - parseInt(a)
+let divide = (a, b) => parseInt(b) / parseInt(a)
 let multiply = (a, b) => parseInt(a) * parseInt(b)
 
 let active = undefined;
@@ -127,7 +127,7 @@ let operate = (operator, a, b) => {
       calcDisplay.innerText = total;
       break;
     case 'subtract':
-      total = subtract(b, a);
+      total = subtract(a, b);
       calcDisplay.innerText = total;
       break;
     case 'divide':
@@ -136,7 +136,7 @@ let operate = (operator, a, b) => {
         calcDisplay.innerText = "u no div by 0";        
         break;
       }
-      total = divide(b, a);
+      total = divide(a, b);
       calcDisplay.innerText = total;
       break;
     
@@ -227,9 +227,13 @@ let processOperator = (typeOfOperator) => {
     memory = total
     active = undefined
     // First entry
-  } else if (!memory && !total) {
-    memory = active
+  } else if (!active && !memory && total === 0) {
+    memory = total
     operator = typeOfOperator
+    active = undefined
+  } else if (!memory)  {
+    memory = active;
+    operator = typeOfOperator;
     active = undefined
   }
 }
@@ -262,6 +266,9 @@ let operatorMultiply = document.querySelector('.multiply')
 let operatorSubtract = document.querySelector('.subtract')
   .addEventListener('click', function () {
     blink();
+    if (!operator) {
+      operator = 'subtract'
+    }
     total = processOperator(operator)
     operator = 'subtract'
 });
@@ -282,13 +289,12 @@ let operatorAdd = document.querySelector('.add')
 
 let operatorEquals = document.querySelector('.equals')
 .addEventListener('click', function() {
-  if (memory && active) {
-    if (!total) {
-      total = 0
-    }
-    total += operate(operator, active, memory)
-  }
-}) 
+  if (total == undefined) {
+    total = operate(operator, parseInt(active), parseInt(memory))
+  } else if (total == 0) {
+    total += operate(operator, parseInt(active), parseInt(memory))
+  } 
+}); 
 
 </script>
 </body>
