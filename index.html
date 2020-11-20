@@ -97,10 +97,10 @@
 
 <script>
 
-let add = (a, b) => parseInt(a) + parseInt(b)
-let subtract = (a, b) => parseInt(b) - parseInt(a)
-let divide = (a, b) => parseInt(b) / parseInt(a)
-let multiply = (a, b) => parseInt(a) * parseInt(b)
+let add = (a, b) => parseFloat(a) + parseFloat(b)
+let subtract = (a, b) => parseFloat(b) - parseFloat(a)
+let divide = (a, b) => parseFloat(b) / parseFloat(a)
+let multiply = (a, b) => parseFloat(a) * parseFloat(b)
 
 let active = undefined;
 let memory = undefined;
@@ -156,8 +156,7 @@ let calcDisplay = document.querySelector('.display p')
 let updateActive = (num) => {
   if (!active && !operator && !memory && total) {
     total = 0
-  }
-  if (active == undefined) {
+  } else if (active == undefined) {
     active = num;
    } else {
     active = active.concat(num);
@@ -208,6 +207,13 @@ let btnEight = document.querySelector('.eight')
 let btnNine = document.querySelector('.nine')
   .addEventListener('click', () =>
   screen.innerText = updateActive("9"))
+
+let btnDecimal = document.querySelector('.decimal')
+  .addEventListener('click', () => {
+    if (!calcDisplay.innerText.includes('.')) {
+    screen.innerText = updateActive(".")
+    }
+  });
 
 let processOperator = (typeOfOperator) => {
   // Total is displayed, press operator to add total to memory
