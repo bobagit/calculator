@@ -106,6 +106,14 @@ let active = undefined;
 let memory = undefined;
 let operator = undefined;
 let total = undefined;
+
+let clear = () => {
+  calcDisplay.innerText = ""
+  active = undefined;
+  operator = undefined;
+  memory = undefined;
+  total = undefined;
+} 
 // #TODO - Fix adding multiple leading Zeros issue
 
 let operate = (operator, a, b) => {
@@ -119,11 +127,16 @@ let operate = (operator, a, b) => {
       calcDisplay.innerText = total;
       break;
     case 'subtract':
-      total = subtract(a, b);
+      total = subtract(b, a);
       calcDisplay.innerText = total;
       break;
     case 'divide':
-      total = divide(a, b);
+      if (a == 0) {
+        clear()
+        calcDisplay.innerText = "u no div by 0";        
+        break;
+      }
+      total = divide(b, a);
       calcDisplay.innerText = total;
       break;
     
@@ -154,14 +167,7 @@ let updateActive = (num) => {
  }
 
 let clearAll = document.querySelector('.clear')
-  .addEventListener('click', function() {
-  calcDisplay.innerText = ""
-  // clear memory
-  active = undefined;
-  operator = undefined;
-  memory = undefined;
-  total = undefined;
-  });
+  .addEventListener('click', clear)
 
 let btnZero = document.querySelector('.zero')
   .addEventListener('click', () => 
@@ -203,23 +209,9 @@ let btnNine = document.querySelector('.nine')
   .addEventListener('click', () =>
   screen.innerText = updateActive("9"))
 
-// OPERATORS
-let operatorDivide = document.querySelector('.divide')
-  .addEventListener('click', function () {
-});
-  
-let operatorMultiply = document.querySelector('.multiply')
-  .addEventListener('click', function () {
-        // ALLOW computation with operator (instead of equals)
-});
-
-let operatorSubtract = document.querySelector('.subtract')
-  .addEventListener('click', function () {
-});
-
 let processOperator = (typeOfOperator) => {
   // Total is displayed, press operator to add total to memory
-  if (!active && !memory && !operator && total) {
+  if (!active && !memory && total) {
     memory = total;
     operator = typeOfOperator
   // Haven't pressed Equals yet
@@ -235,28 +227,66 @@ let processOperator = (typeOfOperator) => {
     memory = total
     active = undefined
     // First entry
-  }else if (!memory && !total) {
+  } else if (!memory && !total) {
     memory = active
     operator = typeOfOperator
     active = undefined
   }
-  return total
+}
+
+let blink = () => {
+  calcDisplay.style.visibility = 'hidden';
+  setTimeout(() => {
+    calcDisplay.style.visibility = 'visible';
+  }, 32);
 }
 
 
-let operatorAdd = document.querySelector('.add') 
-  .addEventListener('click', function() {
-    total = processOperator('add')
+// OPERATORS
+let operatorDivide = document.querySelector('.divide')
+  .addEventListener('click', function () {
+    blink();
+    total = processOperator(operator)
+    operator = 'divide'
 });
 
+let operatorMultiply = document.querySelector('.multiply')
+  .addEventListener('click', function () {
+    blink();
+    total = processOperator(operator)
+    operator = 'multiply'  
+});
+
+
+
+let operatorSubtract = document.querySelector('.subtract')
+  .addEventListener('click', function () {
+    blink();
+    total = processOperator(operator)
+    operator = 'subtract'
+});
+
+let operatorAdd = document.querySelector('.add') 
+  .addEventListener('click', function() {
+    blink();
+    if (!operator) {
+      operator = 'add'
+    }
+    if (!memory && !operator) {
+      operator = 'add'
+      memory = total
+    }
+    total = processOperator(operator)
+    operator = 'add'
+});
 
 let operatorEquals = document.querySelector('.equals')
 .addEventListener('click', function() {
   if (memory && active) {
+    if (!total) {
+      total = 0
+    }
     total += operate(operator, active, memory)
-    active = ''
-    operator = undefined
-    memory = undefined
   }
 }) 
 
