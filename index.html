@@ -9,7 +9,10 @@
 <body>
   
 <div class="container">
+  
+  <div class="header"><h1>macOS Calculator</h1>
 
+    
   <div class="calc">
     <div class="display">
       <p></p>
@@ -96,7 +99,6 @@
 
 
 <script>
-
 let add = (a, b) => parseFloat(a) + parseFloat(b)
 let subtract = (a, b) => parseFloat(b) - parseFloat(a)
 let divide = (a, b) => parseFloat(b) / parseFloat(a)
@@ -116,19 +118,28 @@ let clear = () => {
 } 
 // #TODO - Fix adding multiple leading Zeros issue
 
+function displayResults(result) {
+  if (result.toString().length > 9) {
+     calcDisplay.innerText = result.toString().substring(0, 10)
+  } else {
+  calcDisplay.innerText = result.toString()
+}
+}
+
+
 let operate = (operator, a, b) => {
   switch (operator) {
     case 'multiply':
       total = multiply(a, b)
-      calcDisplay.innerText = total;
+      displayResults(total)
       break;
     case 'add':
       total = add(a, b);
-      calcDisplay.innerText = total;
+      displayResults(total)
       break;
     case 'subtract':
       total = subtract(a, b);
-      calcDisplay.innerText = total;
+      displayResults(total)
       break;
     case 'divide':
       if (a == 0) {
@@ -137,9 +148,8 @@ let operate = (operator, a, b) => {
         break;
       }
       total = divide(a, b);
-      calcDisplay.innerText = total;
+      displayResults(total)
       break;
-    
   }
   // clean up memory
   active = undefined;
@@ -152,8 +162,11 @@ let operate = (operator, a, b) => {
 // Targets
 let calcDisplay = document.querySelector('.display p')
 
-// Memory
+// Functions
 let updateActive = (num) => {
+  if (num == "%") {
+    active /= 100
+  }
   if (!active && !operator && !memory && total) {
     total = 0
   } else if (active == undefined) {
@@ -213,11 +226,13 @@ let btnDecimal = document.querySelector('.decimal')
     if (!calcDisplay.innerText.includes('.')) {
     screen.innerText = updateActive(".")
     }
-  });
+  })
 
+
+// This processes the memory fields. Based on which order operators or numbers
+// are entered, it decides what to do with them
 let processOperator = (typeOfOperator) => {
-  // Total is displayed, press operator to add total to memory
-  if (!active && !memory && total) {
+   if (!active && !memory && total) {
     memory = total;
     operator = typeOfOperator
   // Haven't pressed Equals yet
@@ -251,7 +266,6 @@ let blink = () => {
   }, 32);
 }
 
-
 // OPERATORS
 let operatorDivide = document.querySelector('.divide')
   .addEventListener('click', function () {
@@ -266,8 +280,6 @@ let operatorMultiply = document.querySelector('.multiply')
     total = processOperator(operator)
     operator = 'multiply'  
 });
-
-
 
 let operatorSubtract = document.querySelector('.subtract')
   .addEventListener('click', function () {
@@ -293,13 +305,42 @@ let operatorAdd = document.querySelector('.add')
     operator = 'add'
 });
 
+let operatorPercentage = document.querySelector('.percentage')
+  .addEventListener('click', function () {
+    blink();
+    if (active) {
+      calcDisplay.innerText = active / 100
+    } else if (!active && total) {
+      calcDisplay.innerText = total / 100
+    }
+    active = undefined
+    memory = undefined
+    total = undefined
+    operator = undefined
+
+  });
+
 let operatorEquals = document.querySelector('.equals')
-.addEventListener('click', function() {
-  if (total == undefined) {
-    total = operate(operator, parseInt(active), parseInt(memory))
-  } else if (total == 0) {
-    total += operate(operator, parseInt(active), parseInt(memory))
-  } 
+  .addEventListener('click', function() {
+    blink();
+    if (total == undefined) {
+      total = operate(operator, parseFloat(active), parseFloat(memory))
+    } else if (total == 0) {
+      total += operate(operator, parseFloat(active), parseFloat(memory))
+    } 
+});
+
+let operatorPlusMinus = document.querySelector('.plusminus')
+  .addEventListener('click', function () {
+    blink();
+    if (active) {
+      active *= -1
+      calcDisplay.innerText = active
+    } else if (!active && total) {
+      total *= -1
+      calcDisplay.innerText = total
+    }
+
 }); 
 
 </script>

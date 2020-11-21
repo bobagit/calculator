@@ -4,12 +4,19 @@ $lightgray: #7C7C7C
 $mediumgray: #626262
 $text: #ffffff
 $click: #B0B0B0
+$radius: 4px
 
 .container
   display: flex
+  flex-direction: row
   justify-content: center
   margin: auto
   font-family: "Helvetica Neue"
+
+.header
+  margin: auto
+  width: 300px
+  text-align: center
 
 .calc
   display: grid
@@ -20,7 +27,7 @@ $click: #B0B0B0
   width: 230px
   min-width: 210px
   margin: 10rem auto
-  border-radius: 4px
+  border-radius: $radius
   background-color: #525252
   box-shadow: 0px 15px 30px #ccc
   color: $text
@@ -54,6 +61,12 @@ $click: #B0B0B0
   .divide, .multiply, .subtract, .add, .equals
     background-color: $orange
     font-weight: 700
+  
+  .equals
+    border-radius: 0 0 $radius 0
+  
+  .zero
+    border-radius: 0 0 0 $radius
 
   .seven, .eight, .nine, .four, .five, .six, .one, .two, .three, .zero, .decimal
     background-color: $lightgray

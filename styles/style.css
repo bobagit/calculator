@@ -2,11 +2,21 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   margin: auto;
   font-family: "Helvetica Neue";
+}
+
+.header {
+  margin: auto;
+  width: 300px;
+  text-align: center;
 }
 
 .calc {
@@ -70,6 +80,14 @@
 .calc .divide, .calc .multiply, .calc .subtract, .calc .add, .calc .equals {
   background-color: #F2A23C;
   font-weight: 700;
+}
+
+.calc .equals {
+  border-radius: 0 0 4px 0;
+}
+
+.calc .zero {
+  border-radius: 0 0 0 4px;
 }
 
 .calc .seven, .calc .eight, .calc .nine, .calc .four, .calc .five, .calc .six, .calc .one, .calc .two, .calc .three, .calc .zero, .calc .decimal {
