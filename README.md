@@ -7,5 +7,6 @@ I used the macOS calculator app for the inspiration of the design.
 
 ## Known Issues
  - Pressing Equals after an operator causes NaN
- - Possible to add leading zeros
- - May be possible to end with decimal
+ - Multiple leading zeros
+ - Possible to end with decimal
+ - Large numbers are not handled properly
