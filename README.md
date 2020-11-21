@@ -1,6 +1,7 @@
 # Odin Project - Calculator
 
 I used the macOS calculator app for the inspiration of the design.
+
 [Live Preview](https://bobagit.github.io/calculator/)
 
 
