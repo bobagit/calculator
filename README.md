@@ -2,7 +2,7 @@
 
 I used the macOS calculator app for the inspiration of the design.
 
-[Live Preview](https://bobagit.github.io/calculator/)
+**[Live Preview](https://bobagit.github.io/calculator/)**
 
 
 ## Known Issues
