@@ -119,8 +119,8 @@ let clear = () => {
 // #TODO - Fix adding multiple leading Zeros issue
 
 function displayResults(result) {
-  if (result.toString().length > 9) {
-     calcDisplay.innerText = result.toString().substring(0, 10)
+  if (result.toString().length > 10) {
+     calcDisplay.innerText = result.toString().substring(0, 11)
   } else {
   calcDisplay.innerText = result.toString()
 }
@@ -309,16 +309,26 @@ let operatorPercentage = document.querySelector('.percentage')
   .addEventListener('click', function () {
     blink();
     if (active) {
-      calcDisplay.innerText = active / 100
+      total = active / 100
+      displayResults(total)
     } else if (!active && total) {
-      calcDisplay.innerText = total / 100
+      total = total / 100
+      displayResults(total)
     }
-    active = undefined
-    memory = undefined
-    total = undefined
-    operator = undefined
 
   });
+
+  let operatorPlusMinus = document.querySelector('.plusminus')
+    .addEventListener('click', function () {
+      blink();
+      if (active) {
+        active *= -1
+        calcDisplay.innerText = active
+      } else if (!active && total) {
+        total *= -1
+        displayResults(total)
+      }
+  })
 
 let operatorEquals = document.querySelector('.equals')
   .addEventListener('click', function() {
@@ -330,18 +340,6 @@ let operatorEquals = document.querySelector('.equals')
     } 
 });
 
-let operatorPlusMinus = document.querySelector('.plusminus')
-  .addEventListener('click', function () {
-    blink();
-    if (active) {
-      active *= -1
-      calcDisplay.innerText = active
-    } else if (!active && total) {
-      total *= -1
-      calcDisplay.innerText = total
-    }
-
-}); 
 
 </script>
 </body>
